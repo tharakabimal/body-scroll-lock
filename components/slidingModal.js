@@ -1,5 +1,5 @@
 import React from 'react';
-import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import ScrollLock from 'react-scrolllock';
 
 class SlidingModal extends React.Component {
 
@@ -7,21 +7,10 @@ class SlidingModal extends React.Component {
         modalOpen: false,
     }
 
-    componentDidMount() {
-        // Get a target element to scroll lock
-        this.targetElement = document.querySelector('#slider');
-    }
-
     toggleSlidingModal = () => {
         this.setState(prevState => ({
             modalOpen: !prevState.modalOpen,
-        }), () => {
-            if (!!this.state.modalOpen) {
-                disableBodyScroll(this.targetElement);
-            } else {
-                clearAllBodyScrollLocks();
-            }
-        });
+        }));
     }
 
     render () {
@@ -58,6 +47,10 @@ class SlidingModal extends React.Component {
                             </li>
                         </ul>
                     </div>
+
+                    {modalOpen &&
+                        <ScrollLock />
+                    }
             
                     <style jsx>{`
                         .slidingModalContainer {
